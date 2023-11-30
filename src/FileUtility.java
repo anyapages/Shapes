@@ -1,8 +1,5 @@
-import entities.Canvas;
-import entities.Shape;
-import entities.Triangle;
-import entities.Rectangle;
-import entities.Square;
+import entities.*;
+
 import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,24 +21,38 @@ public class FileUtility {
             throw new InvalidFileException("Invalid file content, rows, columns, background character not defined correctly. Terminating the program.");
         }
 
-        int rows = Integer.parseInt(firstLine[0].trim());
-        int columns = Integer.parseInt(firstLine[1].trim());
-        char backgroundChar = firstLine[2].trim().charAt(0);
+        int rows, columns;
+        char backgroundChar;
+        try {
+            rows = Integer.parseInt(firstLine[0].trim());
+            columns = Integer.parseInt(firstLine[1].trim());
+            backgroundChar = firstLine[2].trim().charAt(0);
+        } catch (NumberFormatException e) {
+            throw new InvalidFileException("Invalid file format for canvas dimensions.");
+        }
 
         Canvas canvas = new Canvas(columns, rows, backgroundChar);
 
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
             String[] parts = line.split(",");
-            if (parts.length >= 3) {
+            if (parts.length >= 5) {
                 String shapeType = parts[0];
                 char printChar = parts[2].trim().charAt(0);
                 Color color = getColorFromString(parts[3].trim());
+                int x, y;
+
+                try {
+                    x = Integer.parseInt(parts[4].trim());
+                    y = Integer.parseInt(parts[5].trim());
+                } catch (NumberFormatException e) {
+                    continue;
+                }
 
                 switch (shapeType) {
                     case "Triangle":
                         int side = Integer.parseInt(parts[1].trim());
-                        Triangle triangle = new Triangle(side, printChar, color);
+                        Triangle triangle = new Triangle(side, printChar, color, x, y);
                         canvas.addShape(triangle);
                         break;
                     case "Rectangle":
@@ -49,13 +60,13 @@ public class FileUtility {
                         int length = Integer.parseInt(dimensions[0].trim());
                         int breadth = Integer.parseInt(dimensions[1].trim());
 
-                        Rectangle rectangle = new Rectangle(length, breadth, printChar, color, 0, 0);
+                        Rectangle rectangle = new Rectangle(length, breadth, printChar, color, x, y);
                         canvas.addShape(rectangle);
                         break;
                     case "Square":
                         int squareSide = Integer.parseInt(parts[1].trim());
 
-                        Square square = new Square(squareSide, printChar, color, 0, 0);
+                        Square square = new Square(squareSide, printChar, color, x, y);
                         canvas.addShape(square);
                         break;
                 }
@@ -66,7 +77,7 @@ public class FileUtility {
         return canvas;
     }
 
-    private static Color getColorFromString(String colorStr) {
+    private static Color getColorFromString(String colorStr) throws InvalidFileException {
         switch (colorStr.toUpperCase()) {
             case "RED":
                 return Color.RED;
@@ -75,10 +86,9 @@ public class FileUtility {
             case "BLACK":
                 return Color.BLACK;
             default:
-                throw new IllegalArgumentException("Invalid color");
+                throw new InvalidFileException("Invalid color: " + colorStr);
         }
     }
-
     public static void saveCanvasToFile(Canvas canvas, String filename) throws FileNotFoundException {
         try (PrintWriter writer = new PrintWriter(filename)) {
             writer.println(canvas.getHeight() + "," + canvas.getWidth() + "," + canvas.getBackgroundChar());
@@ -87,5 +97,4 @@ public class FileUtility {
             }
         }
     }
-
 }

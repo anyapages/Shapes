@@ -4,6 +4,12 @@
  * It also contains methods to add a shape, render the canvas, move a shape, zoom a shape, etc.
  */
 
+/**
+ * Canvas class represents the canvas on which shapes are drawn.
+ * It contains the width, height, background character and a list of shapes.
+ * It also contains methods to add a shape, render the canvas, move a shape, zoom a shape, etc.
+ */
+
 package entities;
 
 import java.util.ArrayList;
@@ -66,8 +72,8 @@ public class Canvas {
         return true;
     }
 
-    public void moveShape(Shape shape, int dx, int dy) {
-        shape.move(dx, dy);
+    public void moveShape(Shape shape, int dx, int dy) throws InvalidLocationException {
+        shape.move(dx, dy, this.width, this.height);
     }
 
     public void zoomShape(Shape shape, double scaleFactor) {

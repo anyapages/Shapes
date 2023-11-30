@@ -6,7 +6,7 @@ All menu options are case insensitive, unless stated otherwise.
 
 1. Load Files - Your program must take only one argument using the command line which will be used to load a predefined object from the file.
 
-java ShapesApplication preload.txt
+java ShapesApplication preloaded.txt
 If the command line argument is missing, print the following error and terminate the program.
 No file input given, we can not setup the drawing console. Terminating the program.
 If the file is not found then print this exception and terminate the program.
@@ -19,7 +19,7 @@ A correct file has the following content. The first line sets the drawing consol
 -,-,-,-,-,-,-,-
 Note that you have to remove the commas while processing. The commas are just separators for ease of processing the input.
 
-if the first line does not have correct specifications like int,int,string then throw InvalidFileException, print the message and terminate the program.
+if the first line does not have correct specifications like int,int,string then throw entities.InvalidFileException, print the message and terminate the program.
 Invalid file content, rows, columns, background character not defined correctly. Terminating the program.
 2. Main Menu - Once you have loaded the file you will show the canvas details followed by the main menu
 
@@ -352,7 +352,7 @@ Select an option to zoom the shape
 Type Z/M for zooming/moving. Use Q for quit and go back to main menu.
 
 
-Create an IllegalSizeException exception to handle the error message. You should throw this exception, catch it and print the message from the exception.
+Create an entities.IllegalSizeException exception to handle the error message. You should throw this exception, catch it and print the message from the exception.
 
 6. More than one shapes - You can add more than 1 shape to the drawing canvas. For simplicity we wont test the cases where the shapes overlap. Once you add the first shape and move it to a different location, you can add another shape as well. See the sample output.
 
