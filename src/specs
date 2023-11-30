@@ -1,0 +1,499 @@
+Task Specifications
+
+For this assignment, all user inputs will be assumed to be of the correct data types; such that if a String is expected then it is assumed a string will be entered, and the same for an integer number. No error control for incorrectly entered data types are required... as of yet! .
+
+All menu options are case insensitive, unless stated otherwise.
+
+1. Load Files - Your program must take only one argument using the command line which will be used to load a predefined object from the file.
+
+java ShapesApplication preload.txt
+If the command line argument is missing, print the following error and terminate the program.
+No file input given, we can not setup the drawing console. Terminating the program.
+If the file is not found then print this exception and terminate the program.
+File not found. Terminating the program.
+A correct file has the following content. The first line sets the drawing console's width(columns) ie 8 and height (rows) ie 4 and the background character ie "-". The rest of the lines may have pre-defined shapes that will be used later in the specifications.
+4,8,-
+-,-,-,-,-,-,-,-
+-,-,-,*,#,#,-,-
+-,-,*,*,#,#,-,-
+-,-,-,-,-,-,-,-
+Note that you have to remove the commas while processing. The commas are just separators for ease of processing the input.
+
+if the first line does not have correct specifications like int,int,string then throw InvalidFileException, print the message and terminate the program.
+Invalid file content, rows, columns, background character not defined correctly. Terminating the program.
+2. Main Menu - Once you have loaded the file you will show the canvas details followed by the main menu
+
+----DIGITAL KINDER KIT: LET'S PLAY & LEARN----
+Current drawing canvas settings:
+- Width: 8
+- Height: 4
+- Background character: -
+
+Please select an option.
+1. Draw triangles
+2. Draw rectangles
+3. Draw squares
+4. Compare the results
+5. Exit
+
+
+For the main menu, you can safely assume that user only inputs integer from 1 to 5. There is no need for error handling.
+
+3. Drawing Shapes - For options 1 to 3, we will take the inputs for sides of triangles/rectangles/squares, the printing character and the colour of the shape. Note that colour can only be RED, BLUE, and BLACK and to be input as UPPER CASE to the user program. Once the input is taken, we should print some details for the shape. The inputs are highlighted in bold.
+
+For Triangle -
+
+Please select an option.
+1. Draw triangles
+2. Draw rectangles
+3. Draw squares
+4. Compare the results
+5. Exit
+1
+Enter side: 2
+Please enter the printing character for triangle: *
+Enter a color (either Red, Blue, Black): RED
+Type : Triangle
+Side 1: 2
+Side 2: 2
+Color: RED
+Area: 2.0
+**------
+*-------
+--------
+--------
+Type Z/M for zooming/moving. Use Q for quit and go back to main menu.
+
+
+For rectangle
+
+Please select an option.
+1. Draw triangles
+2. Draw rectangles
+3. Draw squares
+4. Compare the results
+5. Exit
+2
+Enter length: 3
+Enter breadth: 2
+Please enter the printing character for rectangle: #
+Enter a color (either Red, Blue, Black): BLUE
+Type : Rectangle
+Side 1: 3
+Side 2: 2
+Color: BLUE
+Area: 6.0
+###-----
+###-----
+--------
+--------
+Type Z/M for zooming/moving. Use Q for quit and go back to main menu.
+
+
+For square
+
+Please select an option.
+1. Draw triangles
+2. Draw rectangles
+3. Draw squares
+4. Compare the results
+5. Exit
+3
+Enter side: 3
+Please enter the printing character for square: %
+Enter a color (either Red, Blue, Black): BLACK
+Type : Square
+Side 1: 3
+Side 2: 3
+Color: BLACK
+Area: 9.0
+%%%-----
+%%%-----
+%%%-----
+--------
+Type Z/M for zooming/moving. Use Q for quit and go back to main menu.
+
+
+The shapes are always created at the top left corner. You can add more than 1 shapes to the drawing canvas. We will see an example of this later.
+
+4. Move Menu - Once the shape is added, we can either zoom or move the shapes. We will start with the Move menu and demonstrate using a triangle. The shapes can move in directions - up/down/left/right. The move option works similarly for Squares and Rectangles.
+
+Enter side: 3
+Please enter the printing character for triangle: @
+Enter a color (either Red, Blue, Black): RED
+Type : Triangle
+Side 1: 3
+Side 2: 3
+Color: RED
+Area: 4.5
+@@@-----
+@@------
+@-------
+--------
+Type Z/M for zooming/moving. Use Q for quit and go back to main menu.
+M
+Select an option to move the shape
+[1] Move up
+[2] Move down
+[3] Move left
+[4] Move right
+[5] Go back to Shapes Menu
+2
+--------
+@@@-----
+@@------
+@-------
+Select an option to move the shape
+[1] Move up
+[2] Move down
+[3] Move left
+[4] Move right
+[5] Go back to Shapes Menu
+4
+--------
+-@@@----
+-@@-----
+-@------
+Select an option to move the shape
+[1] Move up
+[2] Move down
+[3] Move left
+[4] Move right
+[5] Go back to Shapes Menu
+3
+--------
+@@@-----
+@@------
+@-------
+Select an option to move the shape
+[1] Move up
+[2] Move down
+[3] Move left
+[4] Move right
+[5] Go back to Shapes Menu
+1
+@@@-----
+@@------
+@-------
+--------
+Select an option to move the shape
+[1] Move up
+[2] Move down
+[3] Move left
+[4] Move right
+[5] Go back to Shapes Menu
+5
+Type Z/M for zooming/moving. Use Q for quit and go back to main menu.
+Q
+Please select an option.
+1. Draw triangles
+2. Draw rectangles
+3. Draw squares
+4. Compare the results
+5. Exit
+
+
+If you try to move out of the canvas you should print an error message. In the below example, the shape is already in the topmost row and cannot move up any more. If we select option 1, we print an error message and prompt the user again to move.
+
+Error Message
+
+This move will move the shape out of the drawing canvas.
+Sample output
+
+Enter side: 3
+Please enter the printing character for triangle: @
+Enter a color (either Red, Blue, Black): RED
+Type : Triangle
+Side 1: 3
+Side 2: 3
+Color: RED
+Area: 4.5
+@@@-----
+@@------
+@-------
+--------
+Type Z/M for zooming/moving. Use Q for quit and go back to main menu.
+M
+Select an option to move the shape
+[1] Move up
+[2] Move down
+[3] Move left
+[4] Move right
+[5] Go back to Shapes Menu
+1
+This move will move the shape out of the drawing canvas.
+@@@-----
+@@------
+@-------
+--------
+Select an option to move the shape
+[1] Move up
+[2] Move down
+[3] Move left
+[4] Move right
+[5] Go back to Shapes Menu
+
+
+Create an InvalidLocationException exception to handle the error message. You should throw this exception, catch it and print the message from the exception.
+
+5. Zoom Menu - The shapes can be zoomed in (enlarged) or zoomed out (diminished).  The size of the canvas remains fixed. The sides of shapes will be increased or decreased by 1 in case of zoom in or zoom out respectively.
+
+Enter side: 2
+Please enter the printing character for triangle: @
+Enter a color (either Red, Blue, Black): RED
+Type : Triangle
+Side 1: 2
+Side 2: 2
+Color: RED
+Area: 2.0
+@@------
+@-------
+--------
+--------
+Type Z/M for zooming/moving. Use Q for quit and go back to main menu.
+Z
+Select an option to zoom the shape
+[1] Zoom in
+[2] Zoom out
+[3] Go back to Shapes Menu
+1
+@@@-----
+@@------
+@-------
+--------
+Select an option to zoom the shape
+[1] Zoom in
+[2] Zoom out
+[3] Go back to Shapes Menu
+2
+@@------
+@-------
+--------
+--------
+Select an option to zoom the shape
+[1] Zoom in
+[2] Zoom out
+[3] Go back to Shapes Menu
+3
+Type Z/M for zooming/moving. Use Q for quit and go back to main menu.
+
+
+If we zoom out and the sides are decreased to length 1, then we cannot zoom out anymore and should print the error message. In below example, the triangle is zoomed out to side =1 and a further zoom out (option 2) leads to the below error message
+
+Error Message
+
+Zoom out will make the shape disappear.
+Sample Output
+
+@-------
+--------
+--------
+--------
+Select an option to zoom the shape
+[1] Zoom in
+[2] Zoom out
+[3] Go back to Shapes Menu
+2
+Zoom out will make the shape disappear.
+@-------
+--------
+--------
+--------
+Select an option to zoom the shape
+[1] Zoom in
+[2] Zoom out
+[3] Go back to Shapes Menu
+
+
+If we zoom in and the size of the sides grows more than the size of any side of the drawing canvas then we should print the below error message
+
+Error Message
+
+Zoom in will make the shape bigger than the drawing canvas.
+Sample Output
+
+@@------
+@-------
+--------
+--------
+Select an option to zoom the shape
+[1] Zoom in
+[2] Zoom out
+[3] Go back to Shapes Menu
+1
+@@@-----
+@@------
+@-------
+--------
+Select an option to zoom the shape
+[1] Zoom in
+[2] Zoom out
+[3] Go back to Shapes Menu
+1
+@@@@----
+@@@-----
+@@------
+@-------
+Select an option to zoom the shape
+[1] Zoom in
+[2] Zoom out
+[3] Go back to Shapes Menu
+1
+Zoom in will make the shape bigger than the drawing canvas.
+@@@@----
+@@@-----
+@@------
+@-------
+Select an option to zoom the shape
+[1] Zoom in
+[2] Zoom out
+[3] Go back to Shapes Menu
+3
+Type Z/M for zooming/moving. Use Q for quit and go back to main menu.
+
+
+Create an IllegalSizeException exception to handle the error message. You should throw this exception, catch it and print the message from the exception.
+
+6. More than one shapes - You can add more than 1 shape to the drawing canvas. For simplicity we wont test the cases where the shapes overlap. Once you add the first shape and move it to a different location, you can add another shape as well. See the sample output.
+
+Please select an option.
+1. Draw triangles
+2. Draw rectangles
+3. Draw squares
+4. Compare the results
+5. Exit
+3
+Enter side: 2
+Please enter the printing character for square: #
+Enter a color (either Red, Blue, Black): RED
+Type : Square
+Side 1: 2
+Side 2: 2
+Color: RED
+Area: 4.0
+##------
+##------
+--------
+--------
+Type Z/M for zooming/moving. Use Q for quit and go back to main menu.
+M
+Select an option to move the shape
+[1] Move up
+[2] Move down
+[3] Move left
+[4] Move right
+[5] Go back to Shapes Menu
+2
+--------
+##------
+##------
+--------
+Select an option to move the shape
+[1] Move up
+[2] Move down
+[3] Move left
+[4] Move right
+[5] Go back to Shapes Menu
+2
+--------
+--------
+##------
+##------
+Select an option to move the shape
+[1] Move up
+[2] Move down
+[3] Move left
+[4] Move right
+[5] Go back to Shapes Menu
+4
+--------
+--------
+-##-----
+-##-----
+Select an option to move the shape
+[1] Move up
+[2] Move down
+[3] Move left
+[4] Move right
+[5] Go back to Shapes Menu
+4
+--------
+--------
+--##----
+--##----
+Select an option to move the shape
+[1] Move up
+[2] Move down
+[3] Move left
+[4] Move right
+[5] Go back to Shapes Menu
+5
+Type Z/M for zooming/moving. Use Q for quit and go back to main menu.
+Q
+Please select an option.
+1. Draw triangles
+2. Draw rectangles
+3. Draw squares
+4. Compare the results
+5. Exit
+1
+Enter side: 2
+Please enter the printing character for triangle: @
+Enter a color (either Red, Blue, Black): BLACK
+Type : Triangle
+Side 1: 2
+Side 2: 2
+Color: BLACK
+Area: 2.0
+@@------
+@-------
+--##----
+--##----
+Type Z/M for zooming/moving. Use Q for quit and go back to main menu.
+Q
+Please select an option.
+1. Draw triangles
+2. Draw rectangles
+3. Draw squares
+4. Compare the results
+5. Exit
+
+
+When more than one shape is added, only move is tested. Zoom for multiple shapes are out of scope in this assessment.
+
+7. Compare Results - Once you have created the drawing, you will compare the canvas with the drawing that you loaded from the file provided in the command line input. If the canvas matches exactly in terms of size, background characters, shapes and their location then print a success message else print an error message.
+
+Please select an option.
+1. Draw triangles
+2. Draw rectangles
+3. Draw squares
+4. Compare the results
+5. Exit
+4
+The current canvas matches the file.
+Please select an option.
+1. Draw triangles
+2. Draw rectangles
+3. Draw squares
+4. Compare the results
+5. Exit
+
+
+Success Message :
+
+The current canvas matches the file.
+Error Message:
+
+The drawing on canvas doesnt match the file.
+8. Exit -  If we choose the option 5 from main menu to exit the program, your program should ask for a filepath to save the current canvas and then either overwrite the file if it already exists or create the file and write if the file doesn't exists.
+
+Please select an option.
+1. Draw triangles
+2. Draw rectangles
+3. Draw squares
+4. Compare the results
+5. Exit
+5
+Enter the file name to save the canvas.
+../tests/savedCanvas.txt
+Goodbye
