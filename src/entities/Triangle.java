@@ -24,6 +24,21 @@ public class Triangle extends Shape {
     }
 
     @Override
+    public String getSide1() {
+        return "Side 1: " + side;
+    }
+
+    @Override
+    public String getSide2() {
+        return "Side 2: " + side;
+    }
+
+    @Override
+    public String getColor() {
+        return "Color: " + color;
+    }
+
+    @Override
     public void zoomIn() throws IllegalSizeException {
         if (side + 1 > Canvas.WIDTH || side + 1 > Canvas.HEIGHT) {
             throw new IllegalSizeException("Zoom in will make the shape bigger than the drawing canvas.");

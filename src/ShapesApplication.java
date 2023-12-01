@@ -119,50 +119,59 @@ public class ShapesApplication {
 
 
     private void handleDrawTriangle() throws InvalidLocationException, IllegalSizeException {
-        System.out.println("Enter side length: ");
+        System.out.println("Enter side length:");
         int side = input.nextInt();
-        System.out.println("Enter printing character for triangle: ");
+        input.nextLine();
+        System.out.println("Enter printing character for triangle:");
         char printingChar = input.next().charAt(0);
-        System.out.println("Enter a color (either Red, Blue, Black): ");
+        System.out.println("Enter a color (either Red, Blue, Black):");
         String color = input.next().toUpperCase();
 
         Triangle triangle = new Triangle(0, 0, side, printingChar, color);
-        triangle.draw(canvas.render());
+        canvas.addShape(triangle);
         canvas.display(canvas.getCanvasArray());
+        printShapeDetails(triangle);
         handleShapeOptions(triangle);
-        shapes.add(triangle);
     }
 
     private void handleDrawRectangle() throws InvalidLocationException, IllegalSizeException {
-        System.out.println("Enter length: ");
+        System.out.println("Enter length:");
         int length = input.nextInt();
-        System.out.println("Enter breadth: ");
+        System.out.println("Enter breadth:");
         int breadth = input.nextInt();
-        System.out.println("Please enter the printing character for rectangle: ");
+        System.out.println("Please enter the printing character for rectangle:");
         char printingChar = input.next().charAt(0);
-        System.out.println("Enter a color (either Red, Blue, Black): ");
+        System.out.println("Enter a color (either Red, Blue, Black):");
         String color = input.next().toUpperCase();
 
         Rectangle rectangle = new Rectangle(0, 0, length, breadth, printingChar, color);
-        rectangle.draw(canvas.render());
+        canvas.addShape(rectangle);
+        printShapeDetails(rectangle);
         canvas.display(canvas.getCanvasArray());
         handleShapeOptions(rectangle);
-        shapes.add(rectangle);
     }
 
     private void handleDrawSquare() throws InvalidLocationException, IllegalSizeException {
-        System.out.println("Enter side length: ");
+        System.out.println("Enter side:");
         int side = input.nextInt();
-        System.out.println("Please enter the printing character for square: ");
+        System.out.println("Please enter the printing character for square:");
         char printingChar = input.next().charAt(0);
-        System.out.println("Enter a color (either Red, Blue, Black): ");
+        System.out.println("Enter a color (either Red, Blue, Black):");
         String color = input.next().toUpperCase();
 
         Square square = new Square(0, 0, side, printingChar, color);
-        square.draw(canvas.render());
+        canvas.addShape(square);
         canvas.display(canvas.getCanvasArray());
+        printShapeDetails(square);
         handleShapeOptions(square);
-        shapes.add(square);
+    }
+
+    private void printShapeDetails(Shape shape) {
+        System.out.println("Type: " + shape.getClass().getSimpleName());
+        System.out.println("Side 1: " + shape.getSide1());
+        System.out.println("Side 2: " + shape.getSide2());
+        System.out.println("Color: " + shape.getColor());
+        System.out.println("Area: " + shape.getArea());
     }
 
     private void handleShapeOptions(Shape shape) throws InvalidLocationException, IllegalSizeException {

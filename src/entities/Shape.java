@@ -14,6 +14,9 @@ public abstract class Shape {
 
     public abstract void draw(char[][] canvas);
     public abstract double getArea();
+    public abstract String getSide1();
+    public abstract String getSide2();
+    public abstract String getColor();
     public abstract void zoomIn() throws IllegalSizeException;
 
     public abstract void zoomOut() throws IllegalSizeException;

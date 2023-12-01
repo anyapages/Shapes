@@ -2,7 +2,6 @@ package entities;
 
 public class Rectangle extends Shape {
     private int length, breadth;
-    private double[][] canvas;
 
     public Rectangle(int x, int y, int length, int breadth, char printingChar, String color) {
         super(x, y, printingChar, color);
@@ -35,6 +34,21 @@ public class Rectangle extends Shape {
     }
 
     @Override
+    public String getSide1() {
+        return "Side 1: " + length;
+    }
+
+    @Override
+    public String getSide2() {
+        return "Side 2: " + breadth;
+    }
+
+    @Override
+    public String getColor() {
+        return "Color: " + color;
+    }
+
+    @Override
     public void zoomIn() {
         this.length++;
         this.breadth++;
@@ -55,8 +69,8 @@ public class Rectangle extends Shape {
     @Override
     public void moveDown() throws InvalidLocationException {
         this.y++;
-        if (this.y + this.breadth > canvas.length) {
-            this.y--; // Undo move
+        if (this.y + this.breadth > Canvas.HEIGHT) {
+            this.y--;
             throw new InvalidLocationException("Cannot move further down");
         }
     }
@@ -70,8 +84,8 @@ public class Rectangle extends Shape {
     @Override
     public void moveRight() throws InvalidLocationException {
         this.x++;
-        if (this.x + this.length > canvas[0].length) {
-            this.x--; // Undo move
+        if (this.x + this.length > Canvas.WIDTH) {
+            this.x--;
             throw new InvalidLocationException("Cannot move further right");
         }
     }
