@@ -6,6 +6,7 @@ public abstract class Shape {
     protected int x, y;
     protected char printingChar;
     protected String color;
+    private boolean zoomedOrMoved;
 
     public Shape(int x, int y, char printingChar, String color) {
         this.x = x;
@@ -49,5 +50,12 @@ public abstract class Shape {
             throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
         }
         x++;
+    }
+    public boolean isZoomedOrMoved() {
+        return zoomedOrMoved;
+    }
+
+    protected void setZoomedOrMoved(boolean zoomedOrMoved) {
+        this.zoomedOrMoved = zoomedOrMoved;
     }
 }

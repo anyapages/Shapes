@@ -13,7 +13,6 @@ public class Rectangle extends Shape {
 
     @Override
     public void draw(char[][] canvas) {
-        // Clear previous drawing
         for (int i = 0; i < canvas.length; i++) {
             for (int j = 0; j < canvas[i].length; j++) {
                 if (canvas[i][j] == this.printingChar) {
@@ -22,7 +21,6 @@ public class Rectangle extends Shape {
             }
         }
 
-        // Draw new rectangle
         for (int i = this.y; i < this.y + this.breadth && i < canvas.length; i++) {
             for (int j = this.x; j < this.x + this.length && j < canvas[i].length; j++) {
                 canvas[i][j] = this.printingChar;

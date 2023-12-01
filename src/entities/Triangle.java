@@ -14,10 +14,9 @@ public class Triangle extends Shape {
 
     @Override
     public void draw(char[][] canvas) {
-        // Draw new triangle
-        for (int i = 0; i < this.side && this.y + i < canvas.length; i++) {
-            for (int j = 0; j <= i && this.x + j < canvas[this.y + i].length; j++) {
-                canvas[this.y + i][this.x + j] = this.printingChar;
+        for (int i = this.side - 1; i >= 0 && this.y + (this.side - 1 - i) < canvas.length; i--) {
+            for (int j = 0; j <= i && this.x + j < canvas[this.y + (this.side - 1 - i)].length; j++) {
+                canvas[this.y + (this.side - 1 - i)][this.x + j] = this.printingChar;
             }
         }
     }
@@ -48,6 +47,7 @@ public class Triangle extends Shape {
             throw new IllegalSizeException("Zoom in will make the shape bigger than the drawing canvas.");
         }
         side++;
+        setZoomedOrMoved(true);
     }
 
     @Override
@@ -56,5 +56,39 @@ public class Triangle extends Shape {
             throw new IllegalSizeException("Zoom out will make the shape disappear.");
         }
         side--;
+        setZoomedOrMoved(true);
     }
+
+    @Override
+    public void moveUp() throws InvalidLocationException {
+        if (y - 1 < 0) {
+            throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
+        }
+        y--;
+    }
+
+    @Override
+    public void moveDown() throws InvalidLocationException {
+        if (y + side >= canvas.getHeight()) {
+            throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
+        }
+        y++;
+    }
+
+    @Override
+    public void moveLeft() throws InvalidLocationException {
+        if (x - 1 < 0) {
+            throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
+        }
+        x--;
+    }
+
+    @Override
+    public void moveRight() throws InvalidLocationException {
+        if (x + side >= canvas.getWidth()) {
+            throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
+        }
+        x++;
+    }
+
 }
