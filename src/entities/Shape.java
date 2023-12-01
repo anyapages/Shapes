@@ -1,5 +1,7 @@
 package entities;
 
+import exceptions.*;
+
 public abstract class Shape {
     protected int x, y;
     protected char printingChar;

@@ -1,4 +1,4 @@
-package entities;
+package exceptions;
 
 public class IllegalSizeException extends Exception {
     public IllegalSizeException(String message) {

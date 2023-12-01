@@ -1,9 +1,11 @@
 package entities;
 
+import exceptions.*;
+
 public class Rectangle extends Shape {
     private int length, breadth;
 
-    public Rectangle(int x, int y, int length, int breadth, char printingChar, String color) {
+    public Rectangle(int x, int y, int length, int breadth, char printingChar, String color, Canvas canvas) {
         super(x, y, printingChar, color);
         this.length = length;
         this.breadth = breadth;

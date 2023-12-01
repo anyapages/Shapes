@@ -3,7 +3,7 @@ package entities;
 public class Square extends Shape {
     private int side;
 
-    public Square(int x, int y, int side, char printingChar, String color) {
+    public Square(int x, int y, int side, char printingChar, String color, Canvas canvas) {
         super(x, y, printingChar, color);
         this.side = side;
     }

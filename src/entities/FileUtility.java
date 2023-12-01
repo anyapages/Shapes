@@ -1,6 +1,7 @@
 package entities;
 
 import java.io.*;
+import exceptions.*;
 
 public class FileUtility {
     public static Canvas loadCanvasFromFile(String filename) throws IOException, InvalidFileException {

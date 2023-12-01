@@ -1,11 +1,15 @@
 package entities;
 
+import exceptions.*;
+
 public class Triangle extends Shape {
     private int side;
+    private Canvas canvas;
 
-    public Triangle(int x, int y, int side, char printingChar, String color) {
+    public Triangle(int x, int y, int side, char printingChar, String color, Canvas canvas) {
         super(x, y, printingChar, color);
         this.side = side;
+        this.canvas = canvas;
     }
 
     @Override
@@ -40,7 +44,7 @@ public class Triangle extends Shape {
 
     @Override
     public void zoomIn() throws IllegalSizeException {
-        if (side + 1 > Canvas.WIDTH || side + 1 > Canvas.HEIGHT) {
+        if (side + 1 > canvas.getWidth() || side + 1 > canvas.getHeight()) {
             throw new IllegalSizeException("Zoom in will make the shape bigger than the drawing canvas.");
         }
         side++;
