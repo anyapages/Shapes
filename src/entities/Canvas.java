@@ -1,89 +1,68 @@
-/**
- * Canvas class represents the canvas on which shapes are drawn.
- * It contains the width, height, background character and a list of shapes.
- * It also contains methods to add a shape, render the canvas, move a shape, zoom a shape, etc.
- */
-
-/**
- * Canvas class represents the canvas on which shapes are drawn.
- * It contains the width, height, background character and a list of shapes.
- * It also contains methods to add a shape, render the canvas, move a shape, zoom a shape, etc.
- */
-
 package entities;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Canvas {
-    private char[][] grid;
-    private char backgroundChar;
-    private int width, height;
-    public List<Shape> shapes;
+    public static int WIDTH;
+    public static int HEIGHT;
+    private List<Shape> shapes;
+    private int width;
+    private int height;
+    private char backgroundCharacter;
 
-    public Canvas(int width, int height, char backgroundChar) {
+    public Canvas(int width, int height, char backgroundCharacter) {
         this.width = width;
         this.height = height;
-        this.backgroundChar = backgroundChar;
-        this.grid = new char[height][width];
-        this.shapes = new ArrayList<>();
-    }
-
-    public void addShape(Shape shape) {
-        shapes.add(shape);
-    }
-
-    public void render() {
-        char[][] canvasArray = new char[height][width];
-        for (int i = 0; i < height; i++) {
-            Arrays.fill(canvasArray[i], backgroundChar);
-        }
-
-        for (Shape shape : shapes) {
-            shape.draw(canvasArray);
-        }
-
-        for (char[] row : canvasArray) {
-            System.out.println(new String(row));
-        }
-    }
-
-    public int getHeight() {
-        return height;
+        this.backgroundCharacter = backgroundCharacter;
+        shapes = new ArrayList<>();
     }
 
     public int getWidth() {
         return width;
     }
 
-    public char getBackgroundChar() {
-        return backgroundChar;
+    public int getHeight() {
+        return height;
     }
 
-    public boolean matchesLoadedFile(Canvas loadedCanvas) {
-        if (this.width != loadedCanvas.width || this.height != loadedCanvas.height) {
-            return false;
+    public String getBackgroundChar() {
+        return Character.toString(backgroundCharacter);
+    }
+
+    public char[][] getCanvasArray() {
+        char[][] canvasArray = new char[height][width];
+        for (char[] row : canvasArray) {
+            Arrays.fill(row, backgroundCharacter);
         }
-        if (this.shapes.size() != loadedCanvas.shapes.size()) {
-            return false;
+
+        for (Shape shape : shapes) {
+            shape.draw(canvasArray);
         }
-        // Additional checks can be added here for more detailed comparisons
-        return true;
+
+        return canvasArray;
     }
 
-    public void moveShape(Shape shape, int dx, int dy) throws InvalidLocationException {
-        shape.move(dx, dy, this.width, this.height);
+    public void addShape(Shape shape) {
+        shapes.add(shape);
     }
 
-    public void zoomShape(Shape shape, double scaleFactor) {
-        shape.zoom(scaleFactor);
+    public char[][] render() {
+        char[][] canvasArray = new char[height][width];
+        for (char[] row : canvasArray) {
+            Arrays.fill(row, backgroundCharacter);
+        }
+
+        for (Shape shape : shapes) {
+            shape.draw(canvasArray);
+        }
+
+        return canvasArray;
     }
 
-    public Shape[] getShapes() {
-        return shapes.toArray(new Shape[0]);
+    public void display() {
+        char[][] canvasArray = render();
+        for (char[] row : canvasArray) {
+            System.out.println(new String(row));
+        }
     }
-
-    // Additional methods for moving, zooming shapes, etc.
 }
-

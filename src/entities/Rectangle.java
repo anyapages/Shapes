@@ -1,36 +1,78 @@
 package entities;
 
-import java.awt.Color;
-
 public class Rectangle extends Shape {
-    private int length;
-    private int breadth;
+    private int length, breadth;
+    private double[][] canvas;
 
-    public Rectangle(int length, int breadth, char printChar, Color color, int x, int y) {
-        super(printChar, color, x, y);
+    public Rectangle(int x, int y, int length, int breadth, char printingChar, String color) {
+        super(x, y, printingChar, color);
         this.length = length;
         this.breadth = breadth;
     }
 
     @Override
     public void draw(char[][] canvas) {
-        for (int i = getY(); i < getY() + breadth; i++) {
-            for (int j = getX(); j < getX() + length; j++) {
-                if (i >= 0 && i < canvas.length && j >= 0 && j < canvas[i].length) {
-                    canvas[i][j] = getPrintChar();
+        // Clear previous drawing
+        for (int i = 0; i < canvas.length; i++) {
+            for (int j = 0; j < canvas[i].length; j++) {
+                if (canvas[i][j] == this.printingChar) {
+                    canvas[i][j] = ' ';
                 }
+            }
+        }
+
+        // Draw new rectangle
+        for (int i = this.y; i < this.y + this.breadth && i < canvas.length; i++) {
+            for (int j = this.x; j < this.x + this.length && j < canvas[i].length; j++) {
+                canvas[i][j] = this.printingChar;
             }
         }
     }
 
     @Override
-    public void zoom(double scaleFactor) {
-        this.length = (int) (this.length * scaleFactor);
-        this.breadth = (int) (this.breadth * scaleFactor);
+    public double getArea() {
+        return length * breadth;
     }
 
     @Override
-    public double calculateArea() {
-        return 0;
+    public void zoomIn() {
+        this.length++;
+        this.breadth++;
+    }
+
+    @Override
+    public void zoomOut() {
+        if (this.length > 1) this.length--;
+        if (this.breadth > 1) this.breadth--;
+    }
+
+    @Override
+    public void moveUp() throws InvalidLocationException {
+        if (this.y > 0) this.y--;
+        else throw new InvalidLocationException("Cannot move further up");
+    }
+
+    @Override
+    public void moveDown() throws InvalidLocationException {
+        this.y++;
+        if (this.y + this.breadth > canvas.length) {
+            this.y--; // Undo move
+            throw new InvalidLocationException("Cannot move further down");
+        }
+    }
+
+    @Override
+    public void moveLeft() throws InvalidLocationException {
+        if (this.x > 0) this.x--;
+        else throw new InvalidLocationException("Cannot move further left");
+    }
+
+    @Override
+    public void moveRight() throws InvalidLocationException {
+        this.x++;
+        if (this.x + this.length > canvas[0].length) {
+            this.x--; // Undo move
+            throw new InvalidLocationException("Cannot move further right");
+        }
     }
 }

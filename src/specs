@@ -497,3 +497,66 @@ Please select an option.
 Enter the file name to save the canvas.
 ../tests/savedCanvas.txt
 Goodbye
+
+
+
+----DIGITAL KINDER KIT: LET'S PLAY & LEARN----
+Current drawing canvas settings:
+- Width: 8
+- Height: 4
+- Background character: -
+
+Please select an option.
+1. Draw triangles
+2. Draw rectangles
+3. Draw squares
+4. Compare the results
+5. Exit
+Enter side: Please enter the printing character for triangle: Enter a color (either Red, Blue, Black): Type : Triangle
+Side 1: 2
+Side 2: 2
+Color: RED
+Area: 2.0
+**------
+*-------
+--------
+--------
+Type Z/M for zooming/moving. Use Q for quit and go back to main menu.
+Select an option to zoom the shape
+[1] Zoom in
+[2] Zoom out
+[3] Go back to Shapes Menu
+***-----
+**------
+*-------
+--------
+Select an option to zoom the shape
+[1] Zoom in
+[2] Zoom out
+[3] Go back to Shapes Menu
+****----
+***-----
+**------
+*-------
+Select an option to zoom the shape
+[1] Zoom in
+[2] Zoom out
+[3] Go back to Shapes Menu
+Zoom in will make the shape bigger than the drawing canvas.
+****----
+***-----
+**------
+*-------
+Select an option to zoom the shape
+[1] Zoom in
+[2] Zoom out
+[3] Go back to Shapes Menu
+Type Z/M for zooming/moving. Use Q for quit and go back to main menu.
+Please select an option.
+1. Draw triangles
+2. Draw rectangles
+3. Draw squares
+4. Compare the results
+5. Exit
+Enter the file name to save the canvas.
+Goodbye
