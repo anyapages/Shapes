@@ -6,6 +6,7 @@ import entities.*;
 
 public class ShapesApplication {
     private Scanner input;
+    private Scanner scanner = new Scanner(System.in);
     private Canvas canvas;
     private String[] commandLineArgs;
 
@@ -53,7 +54,7 @@ public class ShapesApplication {
         System.out.println("5. Exit");
     }
 
-    private void processUserInput() throws InvalidLocationException, IllegalSizeException {
+    private void processUserInput() throws InvalidLocationException, IllegalSizeException, IOException {
         boolean running = true;
         while (running) {
             int choice = input.nextInt();
@@ -72,7 +73,6 @@ public class ShapesApplication {
                     break;
                 case 5:
                     exitApplication();
-                    running = false;
                     break;
                 default:
                     System.out.println("Invalid option. Please try again.");
@@ -90,11 +90,11 @@ public class ShapesApplication {
             } else {
                 System.out.println("The drawing on canvas doesn't match the file.");
             }
+            canvas.display(canvas.getCanvasArray());
         } catch (IOException e) {
             System.out.println("Error reading file: " + e.getMessage());
         }
     }
-
 
     private String canvasToString() {
         char[][] canvasArray = canvas.getCanvasArray();
@@ -109,7 +109,7 @@ public class ShapesApplication {
         System.out.println("Enter the file name to save the canvas.");
         String filename = input.next();
         try {
-            FileUtility.saveCanvasToFile(filename, canvasToString());
+            FileUtility.saveCanvasToFile(canvas, filename);
             System.out.println("Canvas saved to " + filename);
         } catch (IOException e) {
             System.out.println("Error saving canvas: " + e.getMessage());
@@ -117,53 +117,51 @@ public class ShapesApplication {
         System.out.println("Goodbye");
     }
 
+
     private void handleDrawTriangle() throws InvalidLocationException, IllegalSizeException {
-        System.out.println("Enter side length:");
+        System.out.println("Enter side length: ");
         int side = input.nextInt();
-        System.out.println("Enter printing character for triangle:");
+        System.out.println("Enter printing character for triangle: ");
         char printingChar = input.next().charAt(0);
-        System.out.println("Enter a color (either Red, Blue, Black):");
+        System.out.println("Enter a color (either Red, Blue, Black): ");
         String color = input.next().toUpperCase();
 
         Triangle triangle = new Triangle(0, 0, side, printingChar, color);
-        triangle.draw(canvas.getCanvasArray());
-        canvas.display();
+        triangle.draw(canvas.render());
+        canvas.display(canvas.getCanvasArray());
         handleShapeOptions(triangle);
-
         shapes.add(triangle);
     }
 
     private void handleDrawRectangle() throws InvalidLocationException, IllegalSizeException {
-        System.out.println("Enter length:");
+        System.out.println("Enter length: ");
         int length = input.nextInt();
-        System.out.println("Enter breadth:");
+        System.out.println("Enter breadth: ");
         int breadth = input.nextInt();
-        System.out.println("Please enter the printing character for rectangle:");
+        System.out.println("Please enter the printing character for rectangle: ");
         char printingChar = input.next().charAt(0);
-        System.out.println("Enter a color (either Red, Blue, Black):");
+        System.out.println("Enter a color (either Red, Blue, Black): ");
         String color = input.next().toUpperCase();
 
         Rectangle rectangle = new Rectangle(0, 0, length, breadth, printingChar, color);
-        rectangle.draw(canvas.getCanvasArray());
-        canvas.display();
+        rectangle.draw(canvas.render());
+        canvas.display(canvas.getCanvasArray());
         handleShapeOptions(rectangle);
-
         shapes.add(rectangle);
     }
 
     private void handleDrawSquare() throws InvalidLocationException, IllegalSizeException {
-        System.out.println("Enter side length:");
+        System.out.println("Enter side length: ");
         int side = input.nextInt();
-        System.out.println("Please enter the printing character for square:");
+        System.out.println("Please enter the printing character for square: ");
         char printingChar = input.next().charAt(0);
-        System.out.println("Enter a color (either Red, Blue, Black):");
+        System.out.println("Enter a color (either Red, Blue, Black): ");
         String color = input.next().toUpperCase();
 
         Square square = new Square(0, 0, side, printingChar, color);
-        square.draw(canvas.getCanvasArray());
-        canvas.display();
+        square.draw(canvas.render());
+        canvas.display(canvas.getCanvasArray());
         handleShapeOptions(square);
-
         shapes.add(square);
     }
 
@@ -203,49 +201,40 @@ public class ShapesApplication {
                 shape.zoomOut();
                 break;
             case 3:
-                return;
+                break;
             default:
                 System.out.println("Invalid option. Please try again.");
         }
-        shape.draw(canvas.getCanvasArray());
-        canvas.display();
+        canvas.display(canvas.getCanvasArray());
     }
 
-    private void handleMove(Shape shape) {
-        while (true) {
-            try {
-                System.out.println("Select an option to move the shape");
-                System.out.println("[1] Move up");
-                System.out.println("[2] Move down");
-                System.out.println("[3] Move left");
-                System.out.println("[4] Move right");
-                System.out.println("[5] Go back to Shapes Menu");
+    private void handleMove(Shape shape) throws InvalidLocationException {
+        System.out.println("Select an option to move the shape");
+        System.out.println("[1] Move up");
+        System.out.println("[2] Move down");
+        System.out.println("[3] Move left");
+        System.out.println("[4] Move right");
+        System.out.println("[5] Go back to Shapes Menu");
 
-                int choice = input.nextInt();
-                switch (choice) {
-                    case 1:
-                        shape.moveUp();
-                        break;
-                    case 2:
-                        shape.moveDown();
-                        break;
-                    case 3:
-                        shape.moveLeft();
-                        break;
-                    case 4:
-                        shape.moveRight();
-                        break;
-                    case 5:
-                        return;
-                    default:
-                        System.out.println("Invalid option. Please try again.");
-                }
-                shape.draw(canvas.getCanvasArray());
-                canvas.display();
+        int choice = input.nextInt();
+        switch (choice) {
+            case 1:
+                shape.moveUp();
                 break;
-            } catch (InvalidLocationException e) {
-                System.out.println(e.getMessage());
-            }
+            case 2:
+                shape.moveDown();
+                break;
+            case 3:
+                shape.moveLeft();
+                break;
+            case 4:
+                shape.moveRight();
+                break;
+            case 5:
+                break;
+            default:
+                System.out.println("Invalid option. Please try again.");
         }
+        canvas.display(canvas.getCanvasArray());
     }
 }

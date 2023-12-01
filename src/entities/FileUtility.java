@@ -1,10 +1,11 @@
 package entities;
+
 import java.io.*;
 
 public class FileUtility {
     public static Canvas loadCanvasFromFile(String filename) throws IOException, InvalidFileException {
         String fileContent = readFile(filename);
-        // Parse fileContent and create a Canvas object
+
         String[] lines = fileContent.split("\n");
         String[] firstLine = lines[0].split(",");
         if (firstLine.length != 3) {
@@ -14,13 +15,17 @@ public class FileUtility {
         int height = Integer.parseInt(firstLine[1].trim());
         char backgroundChar = firstLine[2].trim().charAt(0);
         Canvas canvas = new Canvas(width, height, backgroundChar);
-        // Further processing to add shapes to canvas if needed
+
         return canvas;
     }
 
-    public static void saveCanvasToFile(String filename, String canvasState) throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
-            writer.write(canvasState);
+    public static void saveCanvasToFile(Canvas canvas, String filePath) throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            char[][] canvasArray = canvas.render();
+            for (char[] row : canvasArray) {
+                writer.write(new String(row));
+                writer.newLine();
+            }
         }
     }
 

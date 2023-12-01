@@ -59,10 +59,10 @@ public class Canvas {
         return canvasArray;
     }
 
-    public void display() {
-        char[][] canvasArray = render();
+    public void display(char[][] canvasArray) {
         for (char[] row : canvasArray) {
             System.out.println(new String(row));
         }
     }
+
 }
