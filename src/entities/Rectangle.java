@@ -9,7 +9,6 @@ import exceptions.*;
 
 public class Rectangle extends Shape {
     private int length, breadth;
-    private int side;
     private Canvas canvas;
 
     public Rectangle(int x, int y, int length, int breadth, char printingChar, String color, Canvas canvas) {
@@ -17,7 +16,6 @@ public class Rectangle extends Shape {
         this.length = length;
         this.breadth = breadth;
         this.canvas = canvas;
-        this.side = length;
     }
 
     /**
@@ -64,21 +62,28 @@ public class Rectangle extends Shape {
 
     @Override
     public void zoomIn() throws IllegalSizeException {
-        if (side + 1 > canvas.getWidth() || side + 1 > canvas.getHeight()) {
+        if (length + 1 > canvas.getWidth() || breadth + 1 > canvas.getHeight()) {
             throw new IllegalSizeException("Zoom in will make the shape bigger than the drawing canvas.");
         }
-        side++;
+        length++;
+        breadth++;
         setZoomedOrMoved(true);
     }
 
     @Override
     public void zoomOut() throws IllegalSizeException {
-        if (side - 1 < 1) {
+        if (length - 1 < 1 || breadth - 1 < 1) {
             throw new IllegalSizeException("Zoom out will make the shape disappear.");
         }
-        side--;
+        length--;
+        breadth--;
         setZoomedOrMoved(true);
     }
+
+    /**
+     * Moves the rectangle up by 1 unit.
+     * @throws InvalidLocationException if the move will move the rectangle out of the canvas
+     */
 
     @Override
     public void moveUp() throws InvalidLocationException {
@@ -86,14 +91,16 @@ public class Rectangle extends Shape {
             throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
         }
         y--;
+        setZoomedOrMoved(true);
     }
 
     @Override
     public void moveDown() throws InvalidLocationException {
-        if (y + side >= canvas.getHeight()) {
+        if (y + breadth >= canvas.getHeight()) {
             throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
         }
         y++;
+        setZoomedOrMoved(true);
     }
 
     @Override
@@ -102,13 +109,15 @@ public class Rectangle extends Shape {
             throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
         }
         x--;
+        setZoomedOrMoved(true);
     }
 
     @Override
     public void moveRight() throws InvalidLocationException {
-        if (x + side >= canvas.getWidth()) {
+        if (x + length >= canvas.getWidth()) {
             throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
         }
         x++;
+        setZoomedOrMoved(true);
     }
 }

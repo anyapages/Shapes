@@ -12,6 +12,7 @@ public class Canvas {
     private int width;
     private int height;
     private char backgroundCharacter;
+    private char[][] canvasArray;
 
     /**
      * Creates a canvas with the specified width and height.
@@ -74,4 +75,9 @@ public class Canvas {
         }
     }
 
+    public void clearCanvas() {
+        for (int i = 0; i < height; i++) {
+            Arrays.fill(canvasArray[i], backgroundCharacter);
+        }
+    }
 }

@@ -34,25 +34,17 @@ public abstract class Shape {
     public abstract void zoomOut() throws IllegalSizeException;
 
     public void moveUp() throws InvalidLocationException {
-        try {
-            if (y - 1 < 0) {
-                throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
-            }
-            y--;
-        } catch (InvalidLocationException e) {
-            System.out.println(e.getMessage());
+        if (y - 1 < 0) {
+            throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
         }
+        y--;
     }
 
     public void moveDown() throws InvalidLocationException {
-        try {
-            if (y + 1 >= Canvas.HEIGHT) {
-                throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
-            }
-            y++;
-        } catch (InvalidLocationException e) {
-            System.out.println(e.getMessage());
+        if (y + 1 >= Canvas.HEIGHT) {
+            throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
         }
+        y++;
     }
 
     public void moveLeft() throws InvalidLocationException {
@@ -67,9 +59,6 @@ public abstract class Shape {
             throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
         }
         x++;
-    }
-    public boolean isZoomedOrMoved() {
-        return zoomedOrMoved;
     }
 
     protected void setZoomedOrMoved(boolean zoomedOrMoved) {

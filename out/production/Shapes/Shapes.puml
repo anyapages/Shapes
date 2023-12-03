@@ -1,0 +1,170 @@
+@startuml
+
+' Package for entity classes
+package entities {
+    ' Canvas class represents the drawing area
+    class Canvas {
+        - width : int
+        - height : int
+        - backgroundCharacter : char
+        - shapes : List<Shape>
+        + getWidth() : int
+        + getHeight() : int
+        + getBackgroundChar() : String
+        + getCanvasArray() : char[][]
+        + addShape(shape : Shape) : void
+        + render() : char[][]
+        + display(canvasArray : char[][]) : void
+    }
+
+    ' FileUtility class handles file operations
+    class FileUtility {
+        + saveCanvasToFile(canvas : Canvas, filePath : String) : void
+        + readFile(file : String) : String
+    }
+
+    ' Rectangle class represents a rectangle shape
+    class Rectangle {
+        - length : int
+        - breadth : int
+        - canvas : Canvas
+        + Rectangle(x : int, y : int, length : int, breadth : int, printingChar : char, color : String, canvas : Canvas)
+        + draw(canvas : char[][]) : void
+        + getArea() : double
+        + getSide1() : String
+        + getSide2() : String
+        + getColor() : String
+        + zoomIn() : void
+        + zoomOut() : void
+        + moveUp() : void
+        + moveDown() : void
+        + moveLeft() : void
+        + moveRight() : void
+    }
+
+    ' Square class represents a square shape
+    class Square {
+        - side : int
+        - canvas : Canvas
+        + Square(x : int, y : int, side : int, printingChar : char, color : String, canvas : Canvas)
+        + draw(canvas : char[][]) : void
+        + getArea() : double
+        + getSide1() : String
+        + getSide2() : String
+        + getColor() : String
+        + zoomIn() : void
+        + zoomOut() : void
+        + moveUp() : void
+        + moveDown() : void
+        + moveLeft() : void
+        + moveRight() : void
+    }
+
+    ' Triangle class represents a triangle shape
+    class Triangle {
+        - side : int
+        - canvas : Canvas
+        + Triangle(x : int, y : int, side : int, printingChar : char, color : String, canvas : Canvas)
+        + draw(canvas : char[][]) : void
+        + getArea() : double
+        + getSide1() : String
+        + getSide2() : String
+        + getColor() : String
+        + zoomIn() : void
+        + zoomOut() : void
+        + moveUp() : void
+        + moveDown() : void
+        + moveLeft() : void
+        + moveRight() : void
+    }
+
+    ' Abstract Shape class for common shape properties and methods
+    abstract class Shape {
+        {abstract} + draw(canvas : char[][]) : void
+        {abstract} + getArea() : double
+        {abstract} + getSide1() : String
+        {abstract} + getSide2() : String
+        {abstract} + getColor() : String
+        {abstract} + zoomIn() : void
+        {abstract} + zoomOut() : void
+        {abstract} + moveUp() : void
+        {abstract} + moveDown() : void
+        {abstract} + moveLeft() : void
+        {abstract} + moveRight() : void
+    }
+}
+
+' Package for custom exceptions
+package exceptions {
+    ' Exception for illegal size operations
+    class IllegalSizeException {
+        + IllegalSizeException(message: String)
+    }
+
+    ' Exception for invalid file format or content
+    class InvalidFileException {
+        + InvalidFileException(message: String)
+    }
+
+    ' Exception for invalid shape location
+    class InvalidLocationException {
+        + InvalidLocationException(message: String)
+    }
+
+    ' Exception for invalid zoom operations
+    class InvalidZoomException {
+        + InvalidZoomException(message: String)
+    }
+}
+
+' Main application class
+class ShapesApplication {
+    - canvas : Canvas
+    - commandLineArgs : String[]
+    - shapes : List<Shape>
+    + main(args : String[]) : void
+    + run(args : String[]) : void
+    + loadFile(filePath : String) : void
+    + displayCanvasDetails() : void
+    + displayMainMenu() : void
+    + processUserInput() : void
+    + compareResults() : void
+    + exitApplication() : void
+    + handleDrawTriangle() : boolean
+    + handleDrawRectangle() : boolean
+    + handleDrawSquare() : boolean
+    + handleShapeOptions(shape : Shape) : boolean
+   }
+}
+
+' Relationships between classes
+ShapesApplication --> entities.Canvas
+entities.Canvas --> entities.Shape
+entities.Shape <|-- entities.Triangle
+entities.Shape <|-- entities.Rectangle
+entities.Shape <|-- entities.Square
+entities.FileUtility <.. ShapesApplication
+exceptions.IllegalSizeException <.. entities.Shape
+exceptions.InvalidFileException <.. ShapesApplication
+exceptions.InvalidLocationException <.. entities.Shape
+exceptions.InvalidZoomException <.. entities.Shape
+
+' Notes for additional context
+note bottom of ShapesApplication
+  ShapesApplication is the main
+  class that handles user input
+  and displays the canvas.
+end note
+
+note top of entities.Canvas
+  Canvas manages shapes and
+  provides methods to manipulate
+  and display them.
+end note
+
+note top of exceptions.IllegalSizeException
+  Thrown when a shape's size
+  operation is not valid.
+end note
+
+@enduml
