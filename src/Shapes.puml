@@ -13,73 +13,18 @@ package entities {
         + getBackgroundChar() : String
         + getCanvasArray() : char[][]
         + addShape(shape : Shape) : void
-        + render() : char[][]
         + display(canvasArray : char[][]) : void
-    }
-
-    ' FileUtility class handles file operations
-    class FileUtility {
-        + saveCanvasToFile(canvas : Canvas, filePath : String) : void
-        + readFile(file : String) : String
-    }
-
-    ' Rectangle class represents a rectangle shape
-    class Rectangle {
-        - length : int
-        - breadth : int
-        - canvas : Canvas
-        + Rectangle(x : int, y : int, length : int, breadth : int, printingChar : char, color : String, canvas : Canvas)
-        + draw(canvas : char[][]) : void
-        + getArea() : double
-        + getSide1() : String
-        + getSide2() : String
-        + getColor() : String
-        + zoomIn() : void
-        + zoomOut() : void
-        + moveUp() : void
-        + moveDown() : void
-        + moveLeft() : void
-        + moveRight() : void
-    }
-
-    ' Square class represents a square shape
-    class Square {
-        - side : int
-        - canvas : Canvas
-        + Square(x : int, y : int, side : int, printingChar : char, color : String, canvas : Canvas)
-        + draw(canvas : char[][]) : void
-        + getArea() : double
-        + getSide1() : String
-        + getSide2() : String
-        + getColor() : String
-        + zoomIn() : void
-        + zoomOut() : void
-        + moveUp() : void
-        + moveDown() : void
-        + moveLeft() : void
-        + moveRight() : void
-    }
-
-    ' Triangle class represents a triangle shape
-    class Triangle {
-        - side : int
-        - canvas : Canvas
-        + Triangle(x : int, y : int, side : int, printingChar : char, color : String, canvas : Canvas)
-        + draw(canvas : char[][]) : void
-        + getArea() : double
-        + getSide1() : String
-        + getSide2() : String
-        + getColor() : String
-        + zoomIn() : void
-        + zoomOut() : void
-        + moveUp() : void
-        + moveDown() : void
-        + moveLeft() : void
-        + moveRight() : void
+        + clearCanvas() : void
+        + render() : char[][]
     }
 
     ' Abstract Shape class for common shape properties and methods
     abstract class Shape {
+        - x : int
+        - y : int
+        - printingChar : char
+        - color : String
+        - zoomedOrMoved : boolean
         {abstract} + draw(canvas : char[][]) : void
         {abstract} + getArea() : double
         {abstract} + getSide1() : String
@@ -91,6 +36,25 @@ package entities {
         {abstract} + moveDown() : void
         {abstract} + moveLeft() : void
         {abstract} + moveRight() : void
+    }
+
+    ' Triangle class represents a triangle shape
+    class Triangle {
+        - side : int
+        + Triangle(x : int, y : int, side : int, printingChar : char, color : String)
+    }
+
+    ' Rectangle class represents a rectangle shape
+    class Rectangle {
+        - length : int
+        - breadth : int
+        + Rectangle(x : int, y : int, length : int, breadth : int, printingChar : char, color : String)
+    }
+
+    ' Square class represents a square shape
+    class Square {
+        - side : int
+        + Square(x : int, y : int, side : int, printingChar : char, color : String)
     }
 }
 
@@ -110,11 +74,6 @@ package exceptions {
     class InvalidLocationException {
         + InvalidLocationException(message: String)
     }
-
-    ' Exception for invalid zoom operations
-    class InvalidZoomException {
-        + InvalidZoomException(message: String)
-    }
 }
 
 ' Main application class
@@ -130,7 +89,6 @@ class ShapesApplication {
     + processUserInput() : void
     + compareResults() : void
     + exitApplication() : void
-    + displayShapes() : void
 }
 
 ' Relationships between classes
@@ -143,7 +101,6 @@ entities.FileUtility <.. ShapesApplication
 exceptions.IllegalSizeException <.. entities.Shape
 exceptions.InvalidFileException <.. ShapesApplication
 exceptions.InvalidLocationException <.. entities.Shape
-exceptions.InvalidZoomException <.. entities.Shape
 
 ' Notes for additional context
 note bottom of ShapesApplication
