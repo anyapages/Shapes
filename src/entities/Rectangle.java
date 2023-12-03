@@ -2,14 +2,28 @@ package entities;
 
 import exceptions.*;
 
+/**
+ * Rectangle class that represents a rectangle shape.
+ * A rectangle has a location (x, y), a printing character, and a color.
+ */
+
 public class Rectangle extends Shape {
     private int length, breadth;
+    private int side;
+    private Canvas canvas;
 
     public Rectangle(int x, int y, int length, int breadth, char printingChar, String color, Canvas canvas) {
         super(x, y, printingChar, color);
         this.length = length;
         this.breadth = breadth;
+        this.canvas = canvas;
+        this.side = length;
     }
+
+    /**
+     * Draws the rectangle on the canvas.
+     * @param canvas the canvas to draw on
+     */
 
     @Override
     public void draw(char[][] canvas) {
@@ -49,44 +63,52 @@ public class Rectangle extends Shape {
     }
 
     @Override
-    public void zoomIn() {
-        this.length++;
-        this.breadth++;
+    public void zoomIn() throws IllegalSizeException {
+        if (side + 1 > canvas.getWidth() || side + 1 > canvas.getHeight()) {
+            throw new IllegalSizeException("Zoom in will make the shape bigger than the drawing canvas.");
+        }
+        side++;
+        setZoomedOrMoved(true);
     }
 
     @Override
-    public void zoomOut() {
-        if (this.length > 1) this.length--;
-        if (this.breadth > 1) this.breadth--;
+    public void zoomOut() throws IllegalSizeException {
+        if (side - 1 < 1) {
+            throw new IllegalSizeException("Zoom out will make the shape disappear.");
+        }
+        side--;
+        setZoomedOrMoved(true);
     }
 
     @Override
     public void moveUp() throws InvalidLocationException {
-        if (this.y > 0) this.y--;
-        else throw new InvalidLocationException("Cannot move further up");
+        if (y - 1 < 0) {
+            throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
+        }
+        y--;
     }
 
     @Override
     public void moveDown() throws InvalidLocationException {
-        this.y++;
-        if (this.y + this.breadth > Canvas.HEIGHT) {
-            this.y--;
-            throw new InvalidLocationException("Cannot move further down");
+        if (y + side >= canvas.getHeight()) {
+            throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
         }
+        y++;
     }
 
     @Override
     public void moveLeft() throws InvalidLocationException {
-        if (this.x > 0) this.x--;
-        else throw new InvalidLocationException("Cannot move further left");
+        if (x - 1 < 0) {
+            throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
+        }
+        x--;
     }
 
     @Override
     public void moveRight() throws InvalidLocationException {
-        this.x++;
-        if (this.x + this.length > Canvas.WIDTH) {
-            this.x--;
-            throw new InvalidLocationException("Cannot move further right");
+        if (x + side >= canvas.getWidth()) {
+            throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
         }
+        x++;
     }
 }

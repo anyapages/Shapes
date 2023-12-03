@@ -1,11 +1,20 @@
 package entities;
 
+import exceptions.*;
+
+/**
+ * Square class that represents a square shape.
+ * A square has a location (x, y), a printing character, and a color.
+ */
+
 public class Square extends Shape {
     private int side;
+    private Canvas canvas;
 
     public Square(int x, int y, int side, char printingChar, String color, Canvas canvas) {
         super(x, y, printingChar, color);
         this.side = side;
+        this.canvas = canvas;
     }
 
     @Override
@@ -25,15 +34,10 @@ public class Square extends Shape {
         }
     }
 
-    @Override
-    public void zoomIn() {
-        this.side++;
-    }
-
-    @Override
-    public void zoomOut() {
-        if (this.side > 1) this.side--;
-    }
+    /**
+     * Gets the area of the square.
+     * @return the area of the square
+     */
 
     @Override
     public double getArea() {
@@ -53,5 +57,55 @@ public class Square extends Shape {
     @Override
     public String getColor() {
         return "Color: " + color;
+    }
+
+    @Override
+    public void zoomIn() throws IllegalSizeException {
+        if (side + 1 > canvas.getWidth() || side + 1 > canvas.getHeight()) {
+            throw new IllegalSizeException("Zoom in will make the shape bigger than the drawing canvas.");
+        }
+        side++;
+        setZoomedOrMoved(true);
+    }
+
+    @Override
+    public void zoomOut() throws IllegalSizeException {
+        if (side - 1 < 1) {
+            throw new IllegalSizeException("Zoom out will make the shape disappear.");
+        }
+        side--;
+        setZoomedOrMoved(true);
+    }
+
+    @Override
+    public void moveUp() throws InvalidLocationException {
+        if (y - 1 < 0) {
+            throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
+        }
+        y--;
+    }
+
+    @Override
+    public void moveDown() throws InvalidLocationException {
+        if (y + side >= canvas.getHeight()) {
+            throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
+        }
+        y++;
+    }
+
+    @Override
+    public void moveLeft() throws InvalidLocationException {
+        if (x - 1 < 0) {
+            throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
+        }
+        x--;
+    }
+
+    @Override
+    public void moveRight() throws InvalidLocationException {
+        if (x + side >= canvas.getWidth()) {
+            throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
+        }
+        x++;
     }
 }

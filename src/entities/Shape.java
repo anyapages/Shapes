@@ -2,6 +2,15 @@ package entities;
 
 import exceptions.*;
 
+/**
+ * This class represents a shape.
+ * A shape has a location (x, y), a printing character, and a color.
+ * A shape can be drawn on a canvas.
+ * A shape can be moved up, down, left, or right.
+ * A shape can be zoomed in or out.
+ * A shape can be queried for its area, sides, and color.
+ */
+
 public abstract class Shape {
     protected int x, y;
     protected char printingChar;
@@ -25,17 +34,25 @@ public abstract class Shape {
     public abstract void zoomOut() throws IllegalSizeException;
 
     public void moveUp() throws InvalidLocationException {
-        if (y - 1 < 0) {
-            throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
+        try {
+            if (y - 1 < 0) {
+                throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
+            }
+            y--;
+        } catch (InvalidLocationException e) {
+            System.out.println(e.getMessage());
         }
-        y--;
     }
 
     public void moveDown() throws InvalidLocationException {
-        if (y + 1 >= Canvas.HEIGHT) {
-            throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
+        try {
+            if (y + 1 >= Canvas.HEIGHT) {
+                throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
+            }
+            y++;
+        } catch (InvalidLocationException e) {
+            System.out.println(e.getMessage());
         }
-        y++;
     }
 
     public void moveLeft() throws InvalidLocationException {

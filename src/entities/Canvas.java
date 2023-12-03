@@ -2,6 +2,9 @@ package entities;
 
 import java.util.*;
 
+/**
+ * Canvas class that represents the drawing canvas.
+ */
 public class Canvas {
     public static int WIDTH;
     public static int HEIGHT;
@@ -9,6 +12,12 @@ public class Canvas {
     private int width;
     private int height;
     private char backgroundCharacter;
+
+    /**
+     * Creates a canvas with the specified width and height.
+     * @param width the width of the canvas
+     * @param height the height of the canvas
+     */
 
     public Canvas(int width, int height, char backgroundCharacter) {
         this.width = width;

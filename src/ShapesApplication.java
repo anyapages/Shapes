@@ -8,6 +8,12 @@ import java.nio.file.Files;
 import entities.*;
 import exceptions.*;
 
+/**
+ * This class is the entry point of the application.
+ * It loads the file, displays the canvas details, and displays the main menu.
+ * It also handles the user input and calls the appropriate methods.
+ */
+
 public class ShapesApplication {
     private static final Scanner input = new Scanner(System.in);
     private static final String FILE_NOT_FOUND_MESSAGE = "File not found. Terminating the program.";
@@ -63,6 +69,8 @@ public class ShapesApplication {
         char backgroundChar = canvasSpecs[2].charAt(0);
 
         this.canvas = new Canvas(width, height, backgroundChar);
+
+        this.commandLineArgs = new String[]{filePath};
     }
 
     private void displayCanvasDetails() {
@@ -118,6 +126,13 @@ public class ShapesApplication {
         }
     }
 
+    /**
+     * This method compares the current canvas state with the file content.
+     * If they are the same, it prints "The current canvas matches the file."
+     * If they are different, it prints "The drawing on canvas doesn't match the file."
+     * It then displays the current canvas state.
+     */
+
     private void compareResults() {
         try {
             String currentCanvasState = canvasToString();
@@ -125,14 +140,21 @@ public class ShapesApplication {
 
             if (currentCanvasState.equals(fileContent)) {
                 System.out.println("The current canvas matches the file.");
+                displayMainMenu();
             } else {
                 System.out.println("The drawing on canvas doesn't match the file.");
+                displayMainMenu();
             }
-            canvas.display(canvas.getCanvasArray());
         } catch (IOException e) {
             System.out.println("Error reading file: " + e.getMessage());
         }
     }
+
+    /**
+     * This method converts the canvas array to a string.
+     * It then returns the string.
+     * @return String
+     */
 
     private String canvasToString() {
         char[][] canvasArray = canvas.getCanvasArray();
@@ -167,9 +189,12 @@ public class ShapesApplication {
         canvas.addShape(triangle);
         printShapeDetails(triangle);
         canvas.display(canvas.getCanvasArray());
-        handleShapeOptions(triangle);
-    }
 
+        boolean quit = handleShapeOptions(triangle);
+        if (quit) {
+            displayMainMenu();
+        }
+    }
 
     private void handleDrawRectangle() throws InvalidLocationException, IllegalSizeException {
         System.out.print("Enter length: ");
@@ -185,7 +210,11 @@ public class ShapesApplication {
         canvas.addShape(rectangle);
         printShapeDetails(rectangle);
         canvas.display(canvas.getCanvasArray());
-        handleShapeOptions(rectangle);
+
+        boolean quit = handleShapeOptions(rectangle);
+        if (!quit) {
+            displayMainMenu();
+        }
     }
 
     private void handleDrawSquare() throws InvalidLocationException, IllegalSizeException {
@@ -200,7 +229,11 @@ public class ShapesApplication {
         canvas.addShape(square);
         printShapeDetails(square);
         canvas.display(canvas.getCanvasArray());
-        handleShapeOptions(square);
+
+        boolean quit = handleShapeOptions(square);
+        if (!quit) {
+            displayMainMenu();
+        }
     }
 
     private void printShapeDetails(Shape shape) {
@@ -211,13 +244,13 @@ public class ShapesApplication {
         System.out.println("Area: " + shape.getArea());
     }
 
-    private void handleShapeOptions(Shape shape) throws InvalidLocationException, IllegalSizeException {
-        boolean inShapeMenu = true;
-        while (inShapeMenu) {
-            System.out.println("Type Z/M for zooming/moving. Use Q for quit and go back to main menu.");
+    private boolean handleShapeOptions(Shape shape) throws InvalidLocationException, IllegalSizeException {
+        System.out.println("Type Z/M for zooming/moving. Use Q for quit and go back to the main menu.");
+
+        while (true) {
             String choice = input.next().toUpperCase();
 
-            switch (choice.toUpperCase()) {
+            switch (choice) {
                 case "Z":
                     handleZoom(shape);
                     break;
@@ -225,14 +258,10 @@ public class ShapesApplication {
                     handleMove(shape);
                     break;
                 case "Q":
-                    inShapeMenu = false;
-                    break;
+                    return true;
                 default:
                     System.out.println("Invalid option. Please try again.");
             }
-        }
-        if (shape.isZoomedOrMoved()) {
-            canvas.display(canvas.getCanvasArray());
         }
     }
 
@@ -259,44 +288,55 @@ public class ShapesApplication {
                 shape.zoomOut();
                 break;
             case 3:
-                break;
+                displayMainMenu();
+                return;
             default:
                 System.out.println("Invalid option. Please try again.");
         }
         canvas.display(canvas.getCanvasArray());
     }
 
-    private void handleMove(Shape shape) {
-        try {
-            System.out.println("Select an option to move the shape");
-            System.out.println("[1] Move up");
-            System.out.println("[2] Move down");
-            System.out.println("[3] Move left");
-            System.out.println("[4] Move right");
-            System.out.println("[5] Go back to Shapes Menu");
+    private void handleMove(Shape shape) throws InvalidLocationException {
+        System.out.println("Select an option to move the shape");
+        System.out.println("[1] Move up");
+        System.out.println("[2] Move down");
+        System.out.println("[3] Move left");
+        System.out.println("[4] Move right");
+        System.out.println("[5] Go back to Shapes Menu");
 
-            int choice = input.nextInt();
-            switch (choice) {
-                case 1:
-                    shape.moveUp();
-                    break;
-                case 2:
-                    shape.moveDown();
-                    break;
-                case 3:
-                    shape.moveLeft();
-                    break;
-                case 4:
-                    shape.moveRight();
-                    break;
-                case 5:
-                    break;
-                default:
-                    System.out.println("Invalid option. Please try again.");
+        int choice = 0;
+
+        input.nextLine();
+
+        while (true) {
+            try {
+                choice = input.nextInt();
+                break;
+            } catch (java.util.InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                input.nextLine();
             }
-            canvas.display(canvas.getCanvasArray());
-        } catch (InvalidLocationException e) {
-            System.out.println(e.getMessage());
         }
+
+        switch (choice) {
+            case 1:
+                shape.moveUp();
+                break;
+            case 2:
+                shape.moveDown();
+                break;
+            case 3:
+                shape.moveLeft();
+                break;
+            case 4:
+                shape.moveRight();
+                break;
+            case 5:
+                displayMainMenu();
+                return;
+            default:
+                System.out.println("Invalid option. Please try again.");
+        }
+        canvas.display(canvas.getCanvasArray());
     }
 }

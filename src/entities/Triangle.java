@@ -2,6 +2,11 @@ package entities;
 
 import exceptions.*;
 
+/**
+ * Triangle class that represents a triangle shape.
+ * A triangle has a location (x, y), a printing character, and a color.
+ */
+
 public class Triangle extends Shape {
     private int side;
     private Canvas canvas;
@@ -11,6 +16,11 @@ public class Triangle extends Shape {
         this.side = side;
         this.canvas = canvas;
     }
+
+    /**
+     * Draws the triangle on the canvas.
+     * @param canvas the canvas to draw on
+     */
 
     @Override
     public void draw(char[][] canvas) {
@@ -90,5 +100,4 @@ public class Triangle extends Shape {
         }
         x++;
     }
-
 }
