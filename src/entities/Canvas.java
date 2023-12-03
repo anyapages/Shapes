@@ -8,11 +8,11 @@ import java.util.*;
 public class Canvas {
     public static int WIDTH;
     public static int HEIGHT;
-    private List<Shape> shapes;
     private int width;
     private int height;
     private char backgroundCharacter;
     private char[][] canvasArray;
+    private List<Shape> shapes = new ArrayList<>();
 
     /**
      * Creates a canvas with the specified width and height.
@@ -24,7 +24,9 @@ public class Canvas {
         this.width = width;
         this.height = height;
         this.backgroundCharacter = backgroundCharacter;
-        shapes = new ArrayList<>();
+        this.shapes = new ArrayList<>();
+        this.canvasArray = new char[height][width];
+        clearCanvas();
     }
 
     public int getWidth() {
@@ -55,20 +57,6 @@ public class Canvas {
     public void addShape(Shape shape) {
         shapes.add(shape);
     }
-
-    public char[][] render() {
-        char[][] canvasArray = new char[height][width];
-        for (char[] row : canvasArray) {
-            Arrays.fill(row, backgroundCharacter);
-        }
-
-        for (Shape shape : shapes) {
-            shape.draw(canvasArray);
-        }
-
-        return canvasArray;
-    }
-
     public void display(char[][] canvasArray) {
         for (char[] row : canvasArray) {
             System.out.println(new String(row));
@@ -76,8 +64,15 @@ public class Canvas {
     }
 
     public void clearCanvas() {
-        for (int i = 0; i < height; i++) {
-            Arrays.fill(canvasArray[i], backgroundCharacter);
+        for (char[] row : canvasArray) {
+            Arrays.fill(row, backgroundCharacter);
         }
+    }
+    public char[][] render() {
+        clearCanvas();
+        for (Shape shape : shapes) {
+            shape.draw(canvasArray);
+        }
+        return canvasArray;
     }
 }

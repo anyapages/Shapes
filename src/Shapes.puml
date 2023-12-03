@@ -130,11 +130,7 @@ class ShapesApplication {
     + processUserInput() : void
     + compareResults() : void
     + exitApplication() : void
-    + handleDrawTriangle() : boolean
-    + handleDrawRectangle() : boolean
-    + handleDrawSquare() : boolean
-    + handleShapeOptions(shape : Shape) : boolean
-   }
+    + displayShapes() : void
 }
 
 ' Relationships between classes

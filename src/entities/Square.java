@@ -19,14 +19,6 @@ public class Square extends Shape {
 
     @Override
     public void draw(char[][] canvas) {
-        for (int i = 0; i < canvas.length; i++) {
-            for (int j = 0; j < canvas[i].length; j++) {
-                if (canvas[i][j] == this.printingChar) {
-                    canvas[i][j] = ' ';
-                }
-            }
-        }
-
         for (int i = this.y; i < this.y + this.side && i < canvas.length; i++) {
             for (int j = this.x; j < this.x + this.side && j < canvas[i].length; j++) {
                 canvas[i][j] = this.printingChar;
@@ -36,6 +28,7 @@ public class Square extends Shape {
 
     /**
      * Gets the area of the square.
+     *
      * @return the area of the square
      */
 
@@ -83,6 +76,7 @@ public class Square extends Shape {
             throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
         }
         y--;
+        setZoomedOrMoved(true);
     }
 
     @Override
@@ -91,6 +85,7 @@ public class Square extends Shape {
             throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
         }
         y++;
+        setZoomedOrMoved(true);
     }
 
     @Override
@@ -99,6 +94,7 @@ public class Square extends Shape {
             throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
         }
         x--;
+        setZoomedOrMoved(true);
     }
 
     @Override
@@ -107,5 +103,6 @@ public class Square extends Shape {
             throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
         }
         x++;
+        setZoomedOrMoved(true);
     }
 }

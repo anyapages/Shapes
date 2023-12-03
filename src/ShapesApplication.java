@@ -124,35 +124,120 @@ public class ShapesApplication {
     }
 
     /**
-     * This method compares the current canvas state with the file content.
-     * If they are the same, it prints "The current canvas matches the file."
-     * If they are different, it prints "The drawing on canvas doesn't match the file."
-     * It then displays the current canvas state.
+     * This method handles the user input for comparing the results.
+     * It reads the file and compares the canvas and shapes.
+     * It then prints the result.
      */
 
+    /**
+     * This method handles the user input for comparing the results.
+     * It reads the file and compares the canvas and shapes.
+     * It then prints the result.
+     */
     private void compareResults() {
         try {
-            String currentCanvasState = canvasToString();
             String fileContent = FileUtility.readFile(commandLineArgs[0]);
+            String canvasContent = canvasToString();
 
-            if (currentCanvasState.equals(fileContent)) {
-                System.out.println("The current canvas matches the file.");
-                displayMainMenu();
+            // Debug: Print out the canvas content and the file content
+            System.out.println("Canvas Content:\n" + canvasContent);
+            System.out.println("File Content:\n" + fileContent);
+
+            boolean canvasMatches = compareCanvas(fileContent);
+
+            if (canvasMatches) {
+                boolean shapesMatch = checkShapesMatch(fileContent);
+                if (shapesMatch) {
+                    System.out.println("The current canvas matches the file.");
+                } else {
+                    System.out.println("The drawing on canvas doesn't match the file.");
+                }
             } else {
                 System.out.println("The drawing on canvas doesn't match the file.");
-                displayMainMenu();
             }
         } catch (IOException e) {
             System.out.println("Error reading file: " + e.getMessage());
         }
     }
 
+
+    private boolean checkShapesMatch(String fileContent) {
+        try {
+            List<String> currentShapes = new ArrayList<>();
+            boolean readingShapes = false;
+
+            String[] currentCanvasLines = canvasToString().split("\n");
+            for (String line : currentCanvasLines) {
+                if (readingShapes) {
+                    currentShapes.add(line);
+                }
+
+                if (line.startsWith("Type :")) {
+                    readingShapes = true;
+                }
+            }
+
+            List<String> fileShapes = new ArrayList<>();
+            String[] fileCanvasLines = fileContent.split("\n");
+            for (String line : fileCanvasLines) {
+                if (line.startsWith("Type :")) {
+                    fileShapes.add(line);
+                }
+            }
+
+            if (currentShapes.size() != fileShapes.size()) {
+                return false;
+            }
+
+            for (int i = 0; i < currentShapes.size(); i++) {
+                if (!currentShapes.get(i).equals(fileShapes.get(i))) {
+                    return false;
+                }
+            }
+
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * This method compares the canvas on the console with the canvas in the file.
+     * It returns true if they match, false otherwise.
+     * @param fileContent the file content
+     * @return boolean
+     */
+
+    private boolean compareCanvas(String fileContent) {
+        String currentCanvasState = canvasToString().trim();
+        String[] currentCanvasLines = currentCanvasState.split("\\r?\\n");
+        String[] fileCanvasLines = fileContent.trim().split("\\r?\\n");
+
+        if (currentCanvasLines.length != fileCanvasLines.length) {
+            return false;
+        }
+
+        for (int i = 0; i < currentCanvasLines.length; i++) {
+            String currentLine = currentCanvasLines[i].replace(",", "");
+            String fileLine = fileCanvasLines[i].replace(",", "");
+
+            if (!currentLine.equals(fileLine)) {
+                System.out.println("Mismatch found at line " + (i + 1));
+                System.out.println("Canvas line: [" + currentLine + "]");
+                System.out.println("File line: [" + fileLine + "]");
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
     /**
      * This method converts the canvas array to a string.
      * It then returns the string.
      * @return String
      */
-
     private String canvasToString() {
         char[][] canvasArray = canvas.getCanvasArray();
         StringBuilder sb = new StringBuilder();
