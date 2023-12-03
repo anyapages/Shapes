@@ -133,7 +133,6 @@ public class ShapesApplication {
     private void compareResults() {
         try {
             String fileContent = FileUtility.readFile(commandLineArgs[0]);
-            System.out.println("Comparing results...");
 
             boolean canvasMatches = compareCanvas(fileContent);
 
@@ -148,10 +147,10 @@ public class ShapesApplication {
     }
 
     /**
-     * This method compares the canvas on the console with the canvas in the file.
-     * It returns true if they match, false otherwise.
-     *
-     * @param fileContent the file content
+     * This method compares the canvas.
+     * It reads the file and compares the canvas.
+     * It then prints the result.
+     * @param fileContent
      * @return boolean
      */
 
@@ -161,16 +160,20 @@ public class ShapesApplication {
         String[] fileCanvasLines = fileContent.trim().split("\\r?\\n|\\n");
 
         fileCanvasLines = Arrays.copyOfRange(fileCanvasLines, 1, fileCanvasLines.length);
+
         for (int i = 0; i < fileCanvasLines.length; i++) {
             fileCanvasLines[i] = fileCanvasLines[i].replace(",", "");
         }
 
-        if (currentCanvasLines.length != fileCanvasLines.length) {
-            System.out.println("Line count mismatch: Canvas has " + currentCanvasLines.length + " lines, file has " + fileCanvasLines.length + " lines.");
+        int fileLineCount = fileCanvasLines[fileCanvasLines.length - 1].isEmpty() ? fileCanvasLines.length - 1 : fileCanvasLines.length;
+        int canvasLineCount = currentCanvasLines[currentCanvasLines.length - 1].isEmpty() ? currentCanvasLines.length - 1 : currentCanvasLines.length;
+
+        if (canvasLineCount != fileLineCount) {
+            System.out.println("Line count mismatch: Canvas has " + canvasLineCount + " lines, file has " + fileLineCount + " lines.");
             return false;
         }
 
-        for (int i = 0; i < currentCanvasLines.length; i++) {
+        for (int i = 0; i < canvasLineCount; i++) {
             if (!currentCanvasLines[i].equals(fileCanvasLines[i])) {
                 System.out.println("Mismatch at line " + (i + 1));
                 System.out.println("Canvas line: [" + currentCanvasLines[i] + "]");
@@ -178,6 +181,7 @@ public class ShapesApplication {
                 return false;
             }
         }
+
         return true;
     }
 
