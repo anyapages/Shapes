@@ -826,3 +826,74 @@ Please select an option.
 
 // fix this issue: the problem is it should says that the drawing on canvas matches the file because the drawing on canvas is the same as the file compare.txt
 ```
+
+
+expectation:
+4
+----------
+----------
+--**###---
+--*-###---
+----------
+----------
+Select an option to move the shape
+[1] Move up
+[2] Move down
+[3] Move left
+[4] Move right
+[5] Go back to Shapes Menu
+5
+Type Z/M for zooming/moving. Use Q for quit and go back to main menu.
+q
+Please select an option.
+1. Draw triangles
+2. Draw rectangles
+3. Draw squares
+4. Compare the results
+5. Exit
+4
+The current canvas matches the file.
+Please select an option.
+1. Draw triangles
+2. Draw rectangles
+3. Draw squares
+4. Compare the results
+5. Exit
+
+
+[5] Go back to Shapes Menu
+----------
+----------
+--**###---
+--*-###---
+----------
+----------
+Select an option to move the shape
+[1] Move up
+[2] Move down
+[3] Move left
+[4] Move right
+[5] Go back to Shapes Menu
+Type Z/M for zooming/moving. Use Q for quit and go back to main menu.
+Please select an option.
+1. Draw triangles
+2. Draw rectangles
+3. Draw squares
+4. Compare the results
+5. Exit
+Comparing results...
+Line count mismatch: Canvas has 6 lines, file has 7 lines.
+The drawing on canvas doesn't match the file.
+The current canvas matches the file.
+Please select an option.
+1. Draw triangles
+2. Draw rectangles
+3. Draw squares
+4. Compare the results
+5. Exit
+Enter the file name to save the canvas.
+Goodbye
+
+//comment: Line count mismatch: Canvas has 6 lines, file has 7 lines. wrong output should be: Line count mismatch: Canvas has 6 lines, file has 6 lines. because the canvas has 6 lines and the file has 6 lines so the output should be: The current canvas matches the file.
+
+```
