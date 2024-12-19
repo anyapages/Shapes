@@ -4,10 +4,10 @@ import exceptions.*;
 
 /**
  * Triangle class that represents a triangle shape.
- * A triangle has a location (x, y), a printing character, and a color.
+ * A triangle has a location (x, y), a printing character, and a colour.
  */
 
-public class Triangle extends Shape {
+public class Triangle extends Shape implements Movable, Zoomable {
     private int side;
     private Canvas canvas;
 
@@ -57,7 +57,6 @@ public class Triangle extends Shape {
             throw new IllegalSizeException("Zoom in will make the shape bigger than the drawing canvas.");
         }
         side++;
-        setZoomedOrMoved(true);
     }
 
     @Override
@@ -66,7 +65,6 @@ public class Triangle extends Shape {
             throw new IllegalSizeException("Zoom out will make the shape disappear.");
         }
         side--;
-        setZoomedOrMoved(true);
     }
 
     @Override

@@ -4,10 +4,10 @@ import exceptions.*;
 
 /**
  * Square class that represents a square shape.
- * A square has a location (x, y), a printing character, and a color.
+ * A square has a location (x, y), a printing character, and a colour.
  */
 
-public class Square extends Shape {
+public class Square extends Shape implements Movable, Zoomable {
     private int side;
     private Canvas canvas;
 
@@ -58,7 +58,6 @@ public class Square extends Shape {
             throw new IllegalSizeException("Zoom in will make the shape bigger than the drawing canvas.");
         }
         side++;
-        setZoomedOrMoved(true);
     }
 
     @Override
@@ -67,7 +66,6 @@ public class Square extends Shape {
             throw new IllegalSizeException("Zoom out will make the shape disappear.");
         }
         side--;
-        setZoomedOrMoved(true);
     }
 
     @Override
@@ -76,7 +74,6 @@ public class Square extends Shape {
             throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
         }
         y--;
-        setZoomedOrMoved(true);
     }
 
     @Override
@@ -85,7 +82,6 @@ public class Square extends Shape {
             throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
         }
         y++;
-        setZoomedOrMoved(true);
     }
 
     @Override
@@ -94,7 +90,6 @@ public class Square extends Shape {
             throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
         }
         x--;
-        setZoomedOrMoved(true);
     }
 
     @Override
@@ -103,6 +98,5 @@ public class Square extends Shape {
             throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
         }
         x++;
-        setZoomedOrMoved(true);
     }
 }

@@ -4,10 +4,10 @@ import exceptions.*;
 
 /**
  * Rectangle class that represents a rectangle shape.
- * A rectangle has a location (x, y), a printing character, and a color.
+ * A rectangle has a location (x, y), a printing character, and a colour.
  */
 
-public class Rectangle extends Shape {
+public class Rectangle extends Shape implements Movable, Zoomable {
     private int length, breadth;
     private Canvas canvas;
 
@@ -67,7 +67,6 @@ public class Rectangle extends Shape {
         }
         length++;
         breadth++;
-        setZoomedOrMoved(true);
     }
 
     @Override
@@ -77,7 +76,6 @@ public class Rectangle extends Shape {
         }
         length--;
         breadth--;
-        setZoomedOrMoved(true);
     }
 
     /**
@@ -91,7 +89,6 @@ public class Rectangle extends Shape {
             throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
         }
         y--;
-        setZoomedOrMoved(true);
     }
 
     @Override
@@ -100,7 +97,6 @@ public class Rectangle extends Shape {
             throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
         }
         y++;
-        setZoomedOrMoved(true);
     }
 
     @Override
@@ -109,7 +105,6 @@ public class Rectangle extends Shape {
             throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
         }
         x--;
-        setZoomedOrMoved(true);
     }
 
     @Override
@@ -118,6 +113,5 @@ public class Rectangle extends Shape {
             throw new InvalidLocationException("This move will move the shape out of the drawing canvas.");
         }
         x++;
-        setZoomedOrMoved(true);
     }
 }
