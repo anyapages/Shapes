@@ -1,7 +1,7 @@
 # Shapes Application 🧲
 
 ## Description
-This Java application allows users to draw and manipulate geometric shapes on a digital canvas. It provides functionality to create triangles, rectangles, and squares, as well as zoom and move these shapes within the canvas.
+This Java application allows users to draw and manipulate geometric shapes on a digital canvas. It provides functionality to create triangles, rectangles, and squares as well as zoom and move these shapes within the canvas.
 
 ## Features
 - Draw triangles, rectangles, and squares
@@ -31,7 +31,7 @@ java ShapesApplication <input_file>
 
 Replace `<input_file>` with the path to your input file containing the initial canvas configuration.
 
-## Input File Format
+## Input file format
 The input file should have the following format:
 - First line: `<height>,<width>,<background_character>`
 - Subsequent lines: Canvas representation
@@ -47,24 +47,24 @@ Example:
 ----------
 ```
 
-## Main Menu Options
+## Main menu options
 1. Draw triangles
 2. Draw rectangles
 3. Draw squares
 4. Compare the results
 5. Exit
 
-## Shape Operations
+## Shape operations
 - Zoom: Increase or decrease the size of a shape
 - Move: Reposition a shape on the canvas (up, down, left, right)
 
-## Comparing Results
+## Comparing results
 The application allows you to compare the current canvas state with a file. It will indicate whether the canvas matches the file content or not.
 
-## Saving Canvas
+## Saving canvas
 You can save the current canvas state to a file when exiting the application.
 
-## Error Handling
+## Error handling
 The application includes robust error handling for various scenarios, such as:
 - File not found
 - Invalid file content
