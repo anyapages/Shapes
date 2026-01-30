@@ -11,18 +11,55 @@ A Java-based digital canvas application for drawing and manipulating geometric s
 - 💾 Save and load canvas states
 - ✅ Compare canvas with reference files
 
-## Quick start
+## Project Structure
+```
+src/
+├── ShapesApplication.java     # Main application entry point
+├── entities/                  # Core shape classes
+│   ├── Canvas.java           # Canvas management
+│   ├── Shape.java            # Abstract base shape
+│   ├── Rectangle.java        # Rectangle implementation
+│   ├── Square.java           # Square implementation
+│   ├── Triangle.java         # Triangle implementation
+│   ├── Color.java            # Color enumeration
+│   ├── FileUtility.java      # File I/O operations
+│   ├── Movable.java          # Movement interface
+│   └── Zoomable.java         # Zoom interface
+├── exceptions/               # Custom exceptions
+│   ├── IllegalSizeException.java
+│   ├── InvalidFileException.java
+│   ├── InvalidLocationException.java
+│   └── InvalidZoomException.java
+└── tests/                    # Test files
+    ├── compare.txt
+    ├── invalidFile.txt
+    └── preloaded.txt
+```
+
+## Quick Start
 ```bash
 # Clone repository
 git clone https://github.com/anyapages/Shapes.git
 cd Shapes
 
-# Compile and run
-javac ShapesApplication.java
-java ShapesApplication <input_file>
+# Compile the application
+javac -d out src/**/*.java
+
+# Run with a test file
+java -cp out ShapesApplication src/tests/preloaded.txt
 ```
 
-## Input format
+## Input Format
+Canvas files should follow this structure:
+```
+width,height,background_character
+canvas_row_1
+canvas_row_2
+...
+canvas_row_height
+```
+
+Example:
 ```
 6,10,-
 ----------
@@ -33,17 +70,27 @@ java ShapesApplication <input_file>
 ----------
 ```
 
-## Usage
-1. **Draw Shapes**: Create triangles, rectangles, or squares
-2. **Transform**: Zoom in/out or move shapes
-3. **Save/Load**: Preserve your work between sessions
-4. **Compare**: Verify canvas against reference files
+## Available Commands
+- **Draw shapes**: Create triangles, rectangles, or squares at specified positions
+- **Move shapes**: Relocate existing shapes to new coordinates
+- **Zoom shapes**: Scale shapes up or down while maintaining proportions
+- **Save canvas**: Export current canvas state to file
+- **Load canvas**: Import canvas from file
+- **Compare**: Verify canvas matches reference file
 
-## Error handling
-- Invalid file content
-- Out-of-bounds movements
-- Illegal shape sizes
-- File I/O exceptions
+## Error Handling
+The application handles various error conditions:
+- **InvalidFileException**: Malformed or corrupted input files
+- **InvalidLocationException**: Attempts to place shapes outside canvas bounds
+- **IllegalSizeException**: Invalid shape dimensions
+- **InvalidZoomException**: Illegal zoom operations
+
+## Development
+Built with Java following object-oriented principles:
+- **Inheritance**: Shape hierarchy with specialized implementations
+- **Interfaces**: Movable and Zoomable for behavior contracts
+- **Exception handling**: Custom exceptions for robust error management
+- **File I/O**: Utility classes for canvas persistence
 
 ## License
-MIT
+MIT License - see LICENSE file for details
